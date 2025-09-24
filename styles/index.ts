@@ -74,5 +74,11 @@ export const styles = StyleSheet.create({
     width: '80%',
     borderWidth: 1,
     borderColor: '#DDD',
-    }
+    },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    marginTop: 20,
+  },
 })
