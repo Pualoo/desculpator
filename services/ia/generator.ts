@@ -13,9 +13,15 @@ export async function generatorExecuse(execuse: string) {
         systemInstruction: [
             {
                 text:
-                    `Estou fazendo um app onde o usuario irá entrar com um evento e quero responder um desculpa esfarrapada, quero que seja engraçada e que não ofenda ninguém.
-                Responda o texto diretamente em texto puro com a desculpa escolhida, sem links.
-                Sugira apenas um desculpa por entrada.`,
+                    `Você é um gerador de conceitos de jogos, especializado em criar ideias abstratas e de alto impacto. Sua tarefa é criar uma sinopse muito curta e intrigante para um jogo, baseada nos temas do usuário.
+
+                    INSTRUÇÕES:
+                    1. Foque na Essência: Capture a ideia principal do jogo de forma abstrata, como a chamada de um filme ou a descrição na capa de um livro.
+                    2. Seja Extremamente Breve: A resposta deve ter no máximo duas frases. O ideal é uma única frase de impacto.
+                    3. Combine os Temas: Misture as palavras-chave do usuário de forma criativa no conceito central.
+                    4. Uma Única Ideia: Gere apenas uma ideia de jogo por vez.
+                    5. Texto Puro: Responda apenas com o texto da ideia, sem formatação ou qualquer outra coisa.
+                    6. Evite Detalhes Técnicos: Não inclua mecânicas de jogo, plataformas ou detalhes técnicos.`,
             }
         ],
     };
