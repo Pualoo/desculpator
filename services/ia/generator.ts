@@ -57,6 +57,7 @@ export async function generatorGameImage(imageDescription: string) {
         apiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY,
     });
     const config = {
+        numberOfImages: 4,
         systemInstruction: [
             {
                 text:
@@ -80,26 +81,18 @@ Dynamic action shot, cinematic but in-game, clean composition, polished for its 
             }
         ],
     };
-    const model = 'gemini-2.5-flash-image-preview';
-    const contents = [
-        {
-            role: 'user',
-            parts: [
-                {
-                    text: imageDescription,
-                },
-            ],
-        },
-    ];
+    const model = 'imagen-3.0-generate-002';
+    const prompt =
+        "Gere uma imagem de um videogame com HUD e com essa descrição: " + imageDescription;
 
     try {
-        const response = await ai.models.generateContent({
+        const response = await ai.models.generateImages({
             model,
             config,
-            contents,
+            prompt,
         });
 
-        const result = response?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data!;
+        const result = response?.generatedImages?.[0]?.image?.imageBytes!;
         const fileUri = FileSystem.cacheDirectory + 'gemini-native-image.png';
 
         // 2. Escrever a string base64 no arquivo
