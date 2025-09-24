@@ -1,14 +1,15 @@
-import { generatorExecuse } from "@/services/ia/generator";
+import { generatorExecuse, generatorGameImage } from "@/services/ia/generator";
 import { styles } from "@/styles";
 import { MotiView } from 'moti';
 import React, { useState } from "react";
-import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const [excuse, setExcuse] = useState('')
   const [answer, setAnswer] = useState('');
   const [isLoading, setLoading] = useState(false)
-
+  const [gameImage, setGameImage] = useState('');
+  const [isImageLoading, setImageLoading] = useState(false);
 
   const handlePress = async () => {
 
@@ -19,17 +20,29 @@ export default function Index() {
 
     setLoading(true)
     setAnswer('')
+    setGameImage(''); 
     const result = await generatorExecuse(excuse);
     setAnswer(result || "...");
     setLoading(false);
   }
+
+  const handleImagePress = async () => {
+    setGameImage(''); 
+    if (!answer) return;
+    setImageLoading(true);
+    const result = await generatorGameImage(answer);
+    if (result) {
+      setGameImage(result);
+    }
+    setImageLoading(false);
+}
 
   return (
     <View
       style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#333" /> 
       <Text style={{ ...styles.title, color: '#eee' }}>💡 Gerador de Ideias de Jogos 🎮</Text>
-      <Text style={{ ...styles.subtitle, color: '#ccc' }}>Sem ideias? 🤔 Deixe a gente gerar uma nova pra você! ✨</Text>
+      <Text style={{ ...styles.subtitle, color: '#ccc' }}> Sem ideias? 🤔 Deixe a gente gerar uma nova pra você! ✨</Text>
       <TextInput
         value={excuse}
         onChangeText={setExcuse} 
@@ -49,6 +62,17 @@ export default function Index() {
         <Text style={styles.card_title}>Sua Ideia de Jogo:</Text>
         <Text style={styles.card_text}>{answer}</Text>
       </MotiView>}
+
+      {answer && !gameImage && <TouchableOpacity style={{...styles.button, backgroundColor: '#4A90E2'}} onPress={handleImagePress}>
+        <Text style={{...styles.button_text, paddingHorizontal: 20}}>
+            {isImageLoading ? "Gerando Imagem..." : "Gerar Imagem!"}
+        </Text>
+      </TouchableOpacity>}
+
+      {gameImage ? 
+    ( <Image source={{uri: gameImage!}} style={styles.image}/>)
+    : null
+      }
     </View>
   );
 }

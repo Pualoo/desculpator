@@ -1,7 +1,7 @@
 import {
     GoogleGenAI,
 } from '@google/genai';
-import * as fs from "node:fs";
+import * as FileSystem from 'expo-file-system';
 
 export async function generatorExecuse(execuse: string) {
     const ai = new GoogleGenAI({
@@ -57,36 +57,26 @@ export async function generatorGameImage(imageDescription: string) {
         apiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY,
     });
     const config = {
-        thinkingConfig: {
-            thinkingBudget: 0,
-        },
         systemInstruction: [
             {
                 text:
-                    `Você é um Diretor de Arte de IA, especializado em gerar prompts para IAs de imagem com foco em visuais de jogos eletrônicos de alto impacto (AAA). Sua tarefa é traduzir os temas do usuário em um prompt detalhado, evocativo e tecnicamente otimizado para produzir a melhor imagem possível.
+                    `PROMPT FOR DIRECT IMAGE GENERATION:
+(CRITICAL: Do not write text, descriptions, or explanations. Generate only the final image based on these keywords. The main subject is based on the user's game idea.)
 
-INSTRUÇÕES:
-1. Estrutura Visual Clara: O prompt deve seguir a estrutura: [SUJEITO] + [AÇÃO/CENÁRIO] + [ESTILO DE ARTE] + [DETALHES TÉCNICOS E DE QUALIDADE].
+SUBJECT: [INSERIR A DESCRIÇÃO DO JOGO AQUI]
 
-2. Crie uma Cena Dinâmica: Descreva um sujeito principal (personagem, criatura, veículo) em um cenário específico, executando uma ação ou em uma pose marcante. Use adjetivos fortes.
+CORE DIRECTIVE:
+An authentic in-game screenshot from a video game.
 
-3. Combine os Temas: Misture criativamente as palavras-chave do usuário no conceito central da cena (sujeito e cenário).
+ART STYLE:
+Playstation 2 / GameCube era graphics, Y2K aesthetic, low-poly 3D models, slightly pixelated textures, vibrant but limited color palette, baked lighting, 4:3 aspect ratio framing.
 
-4. Defina o Estilo de Arte: Especifique claramente o estilo visual. Exemplos: "concept art", "character design", "photorealistic", "cel-shaded", "cyberpunk", "dark fantasy", "pixel art", "splash screen art".
+GAMEPLAY ELEMENTS:
+Visible and clear Heads-Up Display (HUD) is mandatory. The HUD must include at least two of the following: a stylized health bar, a simple mini-map, an ammo counter, or a quest objective. The UI design itself must match the retro Y2K style with chunky fonts or icons. The gameplay perspective should be a third-person over-the-shoulder view or a fixed camera angle.
 
-5. Adicione Detalhes Técnicos e de Qualidade: Inclua palavras-chave que elevam a qualidade da imagem. Use termos como:
-   - Iluminação: "cinematic lighting", "volumetric lighting", "god rays", "neon glow".
-   - Motor Gráfico/Render: "Unreal Engine 5", "Octane render", "CGI".
-   - Qualidade: "ultra detailed", "hyperrealistic", "4K", "8K", "trending on Artstation".
-   - Câmera/Composição: "epic composition", "dynamic angle", "close-up shot".
-
-6. Formato Otimizado: A resposta deve ser uma única linha de texto. Todos os elementos devem ser separados por vírgulas. Não use frases completas nem ponto final.
-
-7. Uma Única Saída: Gere apenas um prompt por vez.
-
-EXEMPLO:
-Temas do usuário: "gato, samurai, neon"
-Sua saída: a close-up shot of a cybernetic samurai cat in sleek black armor, meditating under a heavy neon rain in a Tokyo alley, intricate details, reflections on a puddle, character concept art, cinematic lighting, ultra detailed, Unreal Engine 5, trending on Artstation`,
+COMPOSITION & QUALITY:
+Dynamic action shot, cinematic but in-game, clean composition, polished for its era.
+`,
             }
         ],
     };
@@ -109,12 +99,20 @@ Sua saída: a close-up shot of a cybernetic samurai cat in sleek black armor, me
             contents,
         });
 
-        const result = response?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data?;
-        const buffer = Buffer.from(result, "base64");
-        fs.writeFileSync("gemini-native-image.png", buffer);
-        return result;
+        const result = response?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data!;
+        const fileUri = FileSystem.cacheDirectory + 'gemini-native-image.png';
+
+        // 2. Escrever a string base64 no arquivo
+        // Esta é a forma correta e atual de fazer a operação.
+        await FileSystem.writeAsStringAsync(fileUri, result, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        console.log('Imagem salva em:', fileUri);
+
+        return fileUri;
     } catch (error) {
-        return "Preciso levar minha vó ao jiu jitsu!"
+        console.log(error);
+        return undefined
     }
 }
-
