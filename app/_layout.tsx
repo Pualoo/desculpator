@@ -6,7 +6,7 @@ export default function RootLayout() {
       title: "Jogonator",
       headerTitleStyle: {
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 30,
       },
       headerStyle: {
         backgroundColor: '#00ccbfff'

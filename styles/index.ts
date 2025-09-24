@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 26,
     fontWeight: 'bold',
     color: '#eee',
     marginBottom: 10,
