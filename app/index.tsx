@@ -6,7 +6,7 @@ import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native
 
 export default function Index() {
   const [excuse, setExcuse] = useState('')
-  const [answer, setAnswer] = useState('')
+  const [answer, setAnswer] = useState('');
   const [isLoading, setLoading] = useState(false)
 
 
@@ -27,24 +27,26 @@ export default function Index() {
   return (
     <View
       style={styles.container}>
-      <StatusBar barStyle="dark-content"></StatusBar>
-      <Text style={styles.title}>Desculpator 3000</Text>
-      <Text style={styles.subtitle}>Sua maquina de desculpas profissional</Text>
+      <StatusBar barStyle="light-content" backgroundColor="#333" /> 
+      <Text style={{ ...styles.title, color: '#eee' }}>💡 Gerador de Ideias de Jogos 🎮</Text>
+      <Text style={{ ...styles.subtitle, color: '#ccc' }}>Sem ideias? 🤔 Deixe a gente gerar uma nova pra você! ✨</Text>
       <TextInput
         value={excuse}
-        onChangeText={setExcuse}
+        onChangeText={setExcuse} 
         style={styles.input}
-        placeholder="Escreva a proposta ..."
+        placeholder="Digite palavras-chave para sua ideia de jogo..."
       />
       <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.button_text}>{isLoading ? "Carregando ..." : "Gerar desculpa infalível!"}</Text>
+        <Text style={{...styles.button_text, paddingHorizontal: 20}}>
+          {isLoading ? "Gerando..." : "Gerar Ideia de Jogo!"}
+          </Text>
       </TouchableOpacity>
 
       {answer && <MotiView
         from={{ opacity: 0, translateY: 200 }}
-        animate={{ opacity: 1, translateY: 0 }}
+        animate={{ opacity: 1, translateY: 0 }} 
         style={styles.card}>
-        <Text style={styles.card_title}>Sua desculpa está pronta:</Text>
+        <Text style={styles.card_title}>Sua Ideia de Jogo:</Text>
         <Text style={styles.card_text}>{answer}</Text>
       </MotiView>}
     </View>
