@@ -95,8 +95,6 @@ Dynamic action shot, cinematic but in-game, clean composition, polished for its 
         const result = response?.generatedImages?.[0]?.image?.imageBytes!;
         const fileUri = FileSystem.cacheDirectory + 'gemini-native-image.png';
 
-        // 2. Escrever a string base64 no arquivo
-        // Esta é a forma correta e atual de fazer a operação.
         await FileSystem.writeAsStringAsync(fileUri, result, {
           encoding: FileSystem.EncodingType.Base64,
         });
