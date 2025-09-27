@@ -1,6 +1,6 @@
 ## Bem-vindo ao Jogonator 💡🎮
 
-Este é um projeto Expo criado com create-expo-app.
+O Jogonator é um gerador de ideias de jogos que utiliza as APIs do Google Gemini para criar conceitos originais, visualizá-los com imagens geradas.
 
 ## 🔑 Configuração da Chave de API
 
