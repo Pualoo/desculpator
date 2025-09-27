@@ -1,6 +1,6 @@
 ## Bem-vindo ao Jogonator 💡🎮
 
-O Jogonator é um gerador de ideias de jogos que utiliza as APIs do Google Gemini para criar conceitos originais, visualizá-los com imagens geradas.
+O Jogonator é um gerador de ideias de jogos que utiliza as APIs do Google Gemini para criar conceitos originais de jogos e visualizá-los com imagens geradas.
 
 ## 🔑 Configuração da Chave de API
 
